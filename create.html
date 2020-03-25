@@ -8,33 +8,47 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,800|Roboto&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="./css/style.css" />
-        <link rel="stylesheet" href="./css/index.css" />
+        <link rel="stylesheet" href="./css/login.css" />
     </head>
     <body>
         <nav class="navbar navbar-expand-lg">
-            <a class="navbar-brand nav-logo" href="#"><i class="fas fa-music"></i>  SongBase</a>
+            <a class="navbar-brand nav-logo" href="index.html"><i class="fas fa-music"></i>  SongBase</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto my-2 my-lg-0">
                     <li>
-                        <a id = "home" class="nav-link home" href="#">Home</a>
+                        <a id = "home" class="nav-link home" href="index.html">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a id = "login" class="nav-link" href="login.html">Login</a>
+                        <a id = "login" class="nav-link" href="#">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a id = "logout" class="nav-link" href="#">Logout</a>
+                        <a id = "logout" class="nav-link" href="index.html">Logout</a>
                     </li>
                 </ul>
             </div>
         </nav>
         <div class = "login">
             <h1><i class="fas fa-music"></i> SongBase</h1>
-            <a href="login.html"><button type="button" class="btn btn-primary">Log In</button></a>
-            <br>
-            <a href="create.html">Create an account</a>
+            <form>
+                <div class="form-group">
+                  <label for="inputUsername">Username</label>
+                  <input type="username" class="form-control" id="username">
+                </div>
+                <div class="form-group">
+                  <label for="inputPassword1">Password</label>
+                  <input type="password1" class="form-control" id="password1">
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword2">Verify Password</label>
+                    <input type="password2" class="form-control" id="password2">
+                  </div>
+                <a href="home.html"><button type="button" class="btn btn-primary">Submit</button></a>
+                <br>
+                <a href="index.html">Cancel</a>
+              </form>
         </div>
     </body>
 </html>

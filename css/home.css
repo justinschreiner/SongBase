@@ -10,23 +10,21 @@ body{
 }
 
 h1 {
-    font-size: 120;
+    font-size: 80;
     font-weight: bold;
 }
-
-.btn-primary{
-    size: 35px;
-    font-size: 30;
-    margin: 10px;
+.options{
+    margin: 45px;
 }
 
-.login{
-    padding: 15%;
+.choice{
+    font-size: 50;
+    margin: 10px;
+    font-weight: bolder;
 }
 
 a{
     color: #fff;
-    font-size: 15;
 }
 
 a:hover{
