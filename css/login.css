@@ -1,0 +1,42 @@
+body{
+    overflow: hidden;
+    margin: 0 auto;
+    padding: var(--header-height) 2rem;
+    height: 100vh;
+    min-height: var(--min-gyro-height);
+    max-height: var(--max-gyro-height);
+    color:#fff;
+    text-align: center;
+}
+
+h1 {
+    font-size: 80;
+}
+
+.btn-primary{
+    size: 35px;
+    font-size: 30;
+    margin: 10px;
+}
+
+.login{
+    padding: 5%;
+}
+
+a{
+    color: #fff;
+    font-size: 15;
+}
+
+a:hover{
+    color: #F8333C;
+}
+
+form{
+    margin-left: 30%;
+    margin-right: 30%;
+}
+
+.form-group{
+    text-align: left;
+}
