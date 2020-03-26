@@ -17,6 +17,11 @@ h1 {
     margin: 45px;
 }
 
+.main{
+    margin-left: 35%;
+    margin-right: 35%;
+}
+
 .choice{
     font-size: 50;
     margin: 10px;

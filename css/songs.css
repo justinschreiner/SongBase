@@ -1,0 +1,20 @@
+h2 {
+    font-weight: bold;
+}
+
+.main{
+    background-color: white;
+    border-radius: 30px;
+    padding: 1.5%;
+    margin-top: 50px;
+    margin-left: 30%;
+    margin-right: 30%;
+}
+
+a{
+    color:black;
+}
+
+a:hover{
+    color: #F8333C;
+}

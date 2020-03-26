@@ -10,6 +10,10 @@ body {
     color: var(main-font-color);
 }
 
+a:hover{
+    text-decoration: none;
+}
+
 .btn-primary{
     background-color: #FCAB10;
     border-color: #FCAB10;
