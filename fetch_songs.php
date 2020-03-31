@@ -1,16 +1,19 @@
 <?php
 error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 $mysqli = new mysqli("mysql.eecs.ku.edu", "jschreiner", "pass123", "jschreiner");
-$songname = $_POST['inputName'];
-//$tempo = $_POST['tempoComparison'];
-
+$songname = $_POST['inputSong'];
+$albumname = $_POST['inputAlbum'];
   if($mysqli->connect_errno)
     {
       printf("Connection to database failed %s\n", $mysqli->connect_error);
       exit();
     }
-  else
+
+
+
+ if(!empty($songname))
   {
+
     $query = "SELECT title, ALBUMS.name
               FROM SONGS, ALBUMS
               WHERE (title = '".$songname."'
@@ -20,10 +23,52 @@ $songname = $_POST['inputName'];
     $result = $mysqli->query($query);
     if($result->num_rows > 0)
       {
+        echo "<table>";
+        echo "<tr>";
+        echo "<th> Song title </th>";
+        echo "<th> Album name </th>";
+        echo "</tr>";
         while($row = $result->fetch_assoc())
           {
             $song = $row["title"];
             $album = $row["name"];
+            echo "<tr> <td> $song </td> <td> $album </td> </tr>";
+          }
+      }
+    else if($result->num_rows <= 0)
+    {
+      echo "No songs matching that criteria, redirecting to search page. <br>";
+      $song = "
+      ";
+      $album = "
+       ";
+      header('Refresh: 3; songs.html');
+    }
+  }
+
+
+
+if(!empty($albumname) && empty($songname))
+  {
+    $query = "SELECT name, title
+              FROM ALBUMS, SONGS
+              WHERE name = '".$albumname."'
+              AND ALBUMS.a_id = SONGS.a_id";
+
+    $result = $mysqli->query($query);
+    if($result->num_rows > 0)
+      {
+        echo "<table>";
+        echo "<tr>";
+        echo "<th> Song title </th>";
+        echo "<th> Album name </th>";
+        echo "</tr>";
+        while($row = $result->fetch_assoc())
+          {
+            $song = $row["title"];
+            $album = $row["name"];
+            echo "<tr> <td> $song </td> <td> $album </td> </tr>";
+
           }
       }
     else if($result->num_rows <= 0 || empty($songname))
@@ -36,6 +81,7 @@ $songname = $_POST['inputName'];
       header('Refresh: 3; songs.html');
     }
   }
+
 
 
 ?>
@@ -60,17 +106,3 @@ $songname = $_POST['inputName'];
               border: 1px solid black;
           }
           </style>
-        </head>
-        <body>
-          <center>
-          <table>
-              <tr>
-                <th> Song title </th>
-                <th> Album name </th>
-              </tr>
-              <tr>
-                <td> <?php echo $song;?> </td>
-                <td> <?php echo $album;?> </td>
-              </tr>
-            </table>
-          </center>

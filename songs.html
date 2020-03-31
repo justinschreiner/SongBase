@@ -35,11 +35,19 @@
             <form action="fetch_songs.php" method="POST">
                 <div class="form-row">
                   <div class="form-group col-md-8">
-                    <label for="name">Name</label>
-                    <input type="songName" name = "inputName" class="form-control" id="inputName">
+                    <label for="name">Song title</label>
+                    <input type="songName" name = "inputSong" class="form-control" id="inputSong">
                   </div>
                 </div>
-                Tempo
+
+                <div class="form-row">
+                  <div class="form-group col-md-8">
+                    <label for="name">Album title</label>
+                    <input type="albumName" name = "inputAlbum" class="form-control" id="inputAlbum">
+                  </div>
+                </div>
+
+                <!--
                 <div class="form-row">
                   <div class="form-group col-md-8">
                     <div class="custom-control custom-radio custom-control-inline">
@@ -79,6 +87,7 @@
                     </div>
                   </div>
                 </div>
+              -->
                 <button type="submit" name="submitQuery" class="btn btn-primary" action="fetch_songs.php">Search</button>
                 <a href="home.html">Cancel</a>
               </form>
