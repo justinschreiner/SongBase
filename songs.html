@@ -7,6 +7,9 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,800|Roboto&display=swap" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="./css/style.css" />
         <link rel="stylesheet" href="./css/songs.css" />
     </head>
@@ -35,52 +38,66 @@
             <form action="fetch_songs.php" method="POST">
                 <div class="form-row">
                   <div class="form-group col-md-8">
-                    <label for="name">Name</label>
+                    <strong><label for="name">Name</label></strong>
                     <input type="songName" name = "inputName" class="form-control" id="inputName">
                   </div>
                 </div>
-                Tempo
-                <div class="form-row">
-                  <div class="form-group col-md-8">
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="tempoNone" name="tempoComparison" class="custom-control-input">
-                        <label class="custom-control-label" for="tempoNone">All Tempos</label>
+                    
+
+                    <p>
+                        <a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                          <u>Advanced Search</u>
+                        </a>
+                    </p>
+                    <div class="collapse" id="collapseExample">
+                        <div class="card card-body">   
+                            <strong>Tempo</strong>
+                            <div class="form-row">
+                                <div class="form-group col-md-8">
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="tempoNone" name="tempoComparison" class="custom-control-input">
+                                        <label class="custom-control-label" for="tempoNone">All Tempos</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="tempoLess" name="tempoComparison" class="custom-control-input">
+                                        <label class="custom-control-label" for="tempoLess">Less than</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="tempoGreater" name="tempoComparison" class="custom-control-input">
+                                        <label class="custom-control-label" for="tempoGreater">Greater than</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="tempoValue" class="form-control" id="tempoValue" placeholder="120">
+                                    </div>
+                                </div>
+                            </div>
+                            <strong>Length (seconds)</strong>
+                            <div class = "form-row">
+                                <div class="form-group col-md-8">
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="lengthNone" name="lengthComparison" class="custom-control-input">
+                                        <label class="custom-control-label" for="lengthNone">All Lengths</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="lengthLess" name="lengthComparison" class="custom-control-input">
+                                        <label class="custom-control-label" for="lengthLess">Less than</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="lengthGreater" name="lengthComparison" class="custom-control-input">
+                                        <label class="custom-control-label" for="lengthGreater">Greater than</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="tempoValue" class="form-control" id="tempoValue" placeholder="180">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="tempoLess" name="tempoComparison" class="custom-control-input">
-                        <label class="custom-control-label" for="tempoLess">Less than</label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="tempoGreater" name="tempoComparison" class="custom-control-input">
-                        <label class="custom-control-label" for="tempoGreater">Greater than</label>
-                    </div>
-                    <div class="form-group">
-                        <input type="tempoValue" class="form-control" id="tempoValue" placeholder="120">
-                    </div>
-                  </div>
+                <div>
+                    <br>
+                    <button type="submit" name="submitQuery" class="btn btn-primary" action="fetch_songs.php">Search</button>
+                    <a href="home.html">Cancel</a>
                 </div>
-                Length (seconds)
-                <div class = "form-row">
-                  <div class="form-group col-md-8">
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="lengthNone" name="lengthComparison" class="custom-control-input">
-                        <label class="custom-control-label" for="lengthNone">All Lengths</label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="lengthLess" name="lengthComparison" class="custom-control-input">
-                        <label class="custom-control-label" for="lengthLess">Less than</label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="lengthGreater" name="lengthComparison" class="custom-control-input">
-                        <label class="custom-control-label" for="lengthGreater">Greater than</label>
-                    </div>
-                    <div class="form-group">
-                        <input type="tempoValue" class="form-control" id="tempoValue" placeholder="180">
-                    </div>
-                  </div>
-                </div>
-                <button type="submit" name="submitQuery" class="btn btn-primary" action="fetch_songs.php">Search</button>
-                <a href="home.html">Cancel</a>
               </form>
         </div>
         <div class = "main">
