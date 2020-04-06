@@ -9,6 +9,7 @@
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,800|Roboto&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="./css/style.css" />
         <link rel="stylesheet" href="./css/login.css" />
+
     </head>
     <body>
         <nav class="navbar navbar-expand-lg">
@@ -32,20 +33,20 @@
         </nav>
         <div class = "login">
             <h1><i class="fas fa-music"></i> SongBase</h1>
-            <form>
+            <form action="createUser.php" method="POST">
                 <div class="form-group">
                   <label for="inputUsername">Username</label>
-                  <input type="username" class="form-control" id="username">
+                  <input type="username" name = "username" class="form-control" id="username">
                 </div>
                 <div class="form-group">
                   <label for="inputPassword1">Password</label>
-                  <input type="password1" class="form-control" id="password1">
+                  <input type="password1" name="password1" class="form-control" id="password1">
                 </div>
                 <div class="form-group">
                     <label for="inputPassword2">Verify Password</label>
-                    <input type="password2" class="form-control" id="password2">
+                    <input type="password2" name="password2" class="form-control" id="password2">
                   </div>
-                <a href="home.html"><button type="button" class="btn btn-primary">Submit</button></a>
+                <button type="submite" action="fetch_songs.php" class="btn btn-primary">Submit</button>
                 <br>
                 <a href="index.html">Cancel</a>
               </form>
