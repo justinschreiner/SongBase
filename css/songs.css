@@ -11,6 +11,41 @@ h2 {
     margin-right: 30%;
 }
 
+.results{
+    background-color: white;
+    border-radius: 30px;
+    padding: 1.5%;
+    margin-top: 50px;
+    margin-left: 30%;
+    margin-right: 30%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.result-title{
+    float: left;
+    padding-top: 1%;
+}
+
+.add-button{
+    float:right;
+}
+
+.one-result{
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    padding: 1%;
+    overflow: auto;
+}
+
+th, td {
+    padding: 15px;
+  }
+
+.modal-content{
+    border-radius: 20px;
+}
+
 a{
     color:black;
 }
