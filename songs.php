@@ -31,7 +31,18 @@
                 if (results.length > 0) {
                 for(var res of results) {
                     var line = document.createElement("div");
-                    line.innerHTML = res['title'];
+                    line.className = "one-result";
+                    line.innerHTML = 
+                    "<div id='results'>" + 
+                        "<div class = 'result-title'>" +
+                            "<a data-toggle='modal' data-target='#songInfo' href='song.html'>" + res['title'] + "</a>" +
+                        "</div>" +
+                        "<div class = 'add-button'>" +
+                            "<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#addModal'>" +
+                                "Add to Playlist" +
+                            "</button>" +
+                        "</div>" +
+                    "</div>";
                     wrapper.appendChild(line);
                 }
                 } else {
@@ -134,18 +145,8 @@
         </div>
         <div class = "results">
             <h2>Songs</h2>
-            <div class = "one-result">
                 <div id="results"></div>
-                <div class = "result-title">
-                    <a data-toggle="modal" data-target="#songInfo" href="song.html">Placeholder song</a>
-                </div>
-                <div class = "add-button">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">
-                        Add to Playlist
-                    </button>
-                </div>
             </div>
-        </div>
 
         <div class="modal fade" id="addModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
