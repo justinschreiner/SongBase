@@ -12,6 +12,39 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="./css/style.css" />
         <link rel="stylesheet" href="./css/songs.css" />
+        <script>
+        function fetch() {
+            // find inputs from form
+            var data = new FormData();
+            data.append('search', document.getElementById("inputName").value);
+            data.append('ajax', 1);
+    
+            // use AJAX to search and return songs
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', "fetch_songs.php", true);
+            xhr.onload = function () {
+            if (this.status==200) {
+                var results = JSON.parse(this.response),
+                    wrapper = document.getElementById("results");
+                wrapper.innerHTML = "";
+                console.log(results, results.length);
+                if (results.length > 0) {
+                for(var res of results) {
+                    var line = document.createElement("div");
+                    line.innerHTML = res['title'];
+                    wrapper.appendChild(line);
+                }
+                } else {
+                wrapper.innerHTML = "No results found";
+                }
+            } else {
+                alert("ERROR LOADING FILE!");
+            }
+            };
+            xhr.send(data);
+            return false;
+        }
+        </script>
     </head>
     <body>
         <nav class="navbar navbar-expand-lg">
@@ -35,7 +68,7 @@
         </nav>
         <div class = "main">
             <h2>Refine Search</h2>
-            <form action="fetch_songs.php" method="POST">
+            <form onsubmit="return fetch();">
                 <div class="form-row">
                   <div class="form-group col-md-8">
                     <strong><label for="name">Name</label></strong>
@@ -93,7 +126,8 @@
                     </div>
                 <div>
                     <br>
-                    <button type="submit" name="submitQuery" class="btn btn-primary" action="fetch_songs.php">Search</button>
+                    <input type="submit" name="search" value="Find" class = "btn btn-primary">
+                    <!-- <button type="submit" name="submitQuery" class="btn btn-primary" action="songs.php">Search</button> -->
                     <a href="home.html">Cancel</a>
                 </div>
               </form>
@@ -101,6 +135,7 @@
         <div class = "results">
             <h2>Songs</h2>
             <div class = "one-result">
+                <div id="results"></div>
                 <div class = "result-title">
                     <a data-toggle="modal" data-target="#songInfo" href="song.html">Placeholder song</a>
                 </div>

@@ -1,76 +1,24 @@
 <?php
-error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
-$mysqli = new mysqli("mysql.eecs.ku.edu", "jschreiner", "pass123", "jschreiner");
-$songname = $_POST['inputName'];
-//$tempo = $_POST['tempoComparison'];
+define('DB_HOST', 'mysql.eecs.ku.edu');
+define('DB_NAME', 'jschreiner');
+define('DB_CHARSET', 'utf8');
+define('DB_USER', 'jschreiner');
+define('DB_PASSWORD', 'pass123');
 
-  if($mysqli->connect_errno)
-    {
-      printf("Connection to database failed %s\n", $mysqli->connect_error);
-      exit();
-    }
-  else
-  {
-    $query = "SELECT title, ALBUMS.name
-              FROM SONGS, ALBUMS
-              WHERE (title = '".$songname."'
-              OR name = '".$songname."')
-              AND ALBUMS.a_id = SONGS.a_id";
+try {
+  $pdo = new PDO(
+    "mysql:host=" . DB_HOST . ";charset=" . DB_CHARSET . ";dbname=" . DB_NAME,
+    DB_USER, DB_PASSWORD, [ PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    PDO::ATTR_EMULATE_PREPARES => false ]
+  );
+} catch (Exception $ex) {
+  die($ex->getMessage());
+}
 
-    $result = $mysqli->query($query);
-    if($result->num_rows > 0)
-      {
-        while($row = $result->fetch_assoc())
-          {
-            $song = $row["title"];
-            $album = $row["name"];
-          }
-      }
-    else if($result->num_rows <= 0 || empty($songname))
-    {
-      echo "No songs matching that criteria, redirecting to search page. <br>";
-      $song = "
-      ";
-      $album = "
-       ";
-      header('Refresh: 3; songs.html');
-    }
-  }
-
-
+// (3) SEARCH
+$stmt = $pdo->prepare("SELECT title FROM `SONGS` WHERE title LIKE ?");
+$stmt->execute(["%" . $_POST['search'] . "%"]);
+$results = $stmt->fetchAll();
+if (isset($_POST['ajax'])) { echo json_encode($results); }
 ?>
-
-<!doctype html>
-  <html>
-    <head>
-        <Title> Search results </title>
-          <style>
-          body{
-                background-color: white;
-                border-radius: 30px;
-                padding: 1.5%;
-                margin-top: 50px;
-                margin-left: 30%;
-                margin-right: 30%;
-              }
-
-          table, th, td
-          {
-              border-collapse: collapse;
-              border: 1px solid black;
-          }
-          </style>
-        </head>
-        <body>
-          <center>
-          <table>
-              <tr>
-                <th> Song title </th>
-                <th> Album name </th>
-              </tr>
-              <tr>
-                <td> <?php echo $song;?> </td>
-                <td> <?php echo $album;?> </td>
-              </tr>
-            </table>
-          </center>
