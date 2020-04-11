@@ -18,7 +18,6 @@ if(!empty($username) && !empty($password))
     if($testResult->num_rows > 0)
       {
         header('Refresh: .1; create.html');
-        //echo '<script>existingUser()</script>'
       }
     else if($password == $verifyPass && !empty($username) && !empty($password))
       {
