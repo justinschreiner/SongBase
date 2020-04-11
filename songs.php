@@ -33,7 +33,7 @@
                     var line = document.createElement("div");
                     line.className = "one-result";
                     line.innerHTML = 
-                    "<div id='results'>" + 
+                    "<div id='results' name = " + res['s_id'] + ">" + 
                         "<div class = 'result-title'>" +
                             "<a data-toggle='modal' data-target='#songInfo' href='song.html'>" + res['title'] + "</a>" +
                         "</div>" +
