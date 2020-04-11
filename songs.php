@@ -140,6 +140,7 @@
                     <input type="songName" name = "inputName" class="form-control" id="inputName">
                   </div>
                 </div>
+                    <!-- STRETCH GOAL: BE ABLE TO MODIFY SEARCH BY THESE PARAMETERS
                     <p>
                         <a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                           <u>Advanced Search</u>
@@ -188,7 +189,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 <div>
                     <br>
                     <input type="submit" name="search" value="Find" class = "btn btn-primary">
@@ -243,12 +244,13 @@
                 </div>
             </div>
         </div>
-
+        
+        <!-- STRETCH GOAL: RETURN MATCHING ALBUMS HERE.  NAMES OF ABLUMS CAN BE CLICKED, WHICH WILL AUTO SEARCH SONGS IN THAT ALBUM.
         <div class = "results">
             <h2>Albums</h2>
             <div class = "one-result">
                 Placeholder album
             </div>
-        </div>
+        </div> -->
     </body>
 </html>
