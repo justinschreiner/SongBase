@@ -33,8 +33,9 @@
                     var line = document.createElement("div");
                     line.className = "one-result";
                     line.innerHTML = 
-                    "<div id='results' name = " + res['s_id'] + ">" + 
-                        "<div class = 'result-title'>" +
+                    "<div id='results'>" + 
+                        //this is where the song name is stored, if this is clicked, it will call getSongInfo() and pass this song's s_id
+                        "<div class = 'result-title' id = " + res['s_id'] + " onclick='getSongInfo(" + "this.id" + ")'>" +
                             "<a data-toggle='modal' data-target='#songInfo' href='song.html'>" + res['title'] + "</a>" +
                         "</div>" +
                         "<div class = 'add-button'>" +
@@ -43,6 +44,59 @@
                             "</button>" +
                         "</div>" +
                     "</div>";
+                    wrapper.appendChild(line);
+                }
+                } else {
+                wrapper.innerHTML = "No results found";
+                }
+            } else {
+                alert("ERROR LOADING FILE!");
+            }
+            };
+            xhr.send(data);
+            return false;
+        }
+
+        function getSongInfo(sid){
+            // find inputs from form
+            var data = new FormData();
+            data.append('search', sid);
+            data.append('ajax', 1);
+    
+            // use AJAX to search and return songs
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', "song_info.php", true);
+            xhr.onload = function () {
+            if (this.status==200) {
+                var results = JSON.parse(this.response),
+                    wrapper = document.getElementById("song-modal");
+                wrapper.innerHTML = "";
+                console.log(results, results.length);
+                if (results.length > 0) {
+                for(var res of results) {
+                    var line = document.createElement("div");
+                    line.className = "one-result";
+                    line.innerHTML = 
+                    "<table class='songInfo'>" + 
+                        "<thead>" +
+                            "<tr>" +
+                            "<th scope='col'>Title</th>" +
+                            "<th scope='col'>Artist</th>" +
+                            "<th scope='col'>Album</th>" +
+                            "<th scope='col'>Tempo</th>" +
+                            "<th scope='col'>Duration</th>" +
+                            "</tr>" +
+                        "</thead>" +
+                        "<tbody>" +
+                            "<tr>" +
+                            "<th scope='row'>"+ res['title'] +"</th>" +
+                            "<td>"+ res['artist'] + "</td>" +
+                            "<td>"+ res['name'] + "</td>" +
+                            "<td>"+ res['tempo'] +"</td>" +
+                            "<td>"+ res['duration'] +"</td>" +
+                            "</tr>" +
+                        "</tbody>" +
+                    "</table>";
                     wrapper.appendChild(line);
                 }
                 } else {
@@ -181,30 +235,10 @@
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <table class="songInfo">
-                        <thead>
-                            <tr>
-                            <th scope="col">Title</th>
-                            <th scope="col">Artist</th>
-                            <th scope="col">Album</th>
-                            <th scope="col">Tempo</th>
-                            <th scope="col">Duration</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                            <th scope="row">song name</th>
-                            <td>artist name</td>
-                            <td>album name</td>
-                            <td>100 </td>
-                            <td>100 </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="modal-body" id="song-modal">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">Add to playlist</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#addModal">Add to playlist</button>
                 </div>
                 </div>
             </div>
