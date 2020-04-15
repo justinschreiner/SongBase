@@ -9,6 +9,46 @@
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,800|Roboto&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="./css/style.css" />
         <link rel="stylesheet" href="./css/songs.css" />
+        <script>
+        function fetchPlaylists() {
+            // find inputs from form
+            var data = new FormData();
+            data.append('name', document.getElementById("playlistName").value);
+            data.append('user', document.getElementById("playlistUser").value);
+            data.append('ajax', 1);
+    
+            // use AJAX to search and return songs
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', "fetch-playlists.php", true);
+            xhr.onload = function () {
+            if (this.status==200) {
+                var results = JSON.parse(this.response),
+                    wrapper = document.getElementById("results");
+                wrapper.innerHTML = "";
+                if (results.length > 0) {
+                for(var res of results) {
+                    var line = document.createElement("div");
+                    line.className = "res";
+                    line.innerHTML =
+                        "<div id='results'>" + 
+                            //this is where the song name is stored, if this is clicked, it will call getSongInfo() and pass this song's s_id
+                            "<div class = 'result-playlist'>" +
+                                "<a href='view-playlist.html?id="+ res['p_id'] +"'>" + res['name'] + "</a>" +
+                            "</div>" +
+                        "</div>";
+                    wrapper.appendChild(line);
+                }
+                } else {
+                wrapper.innerHTML = "No results found";
+                }
+            } else {
+                alert("ERROR LOADING FILE!");
+            }
+            };
+            xhr.send(data);
+            return false;
+        }
+        </script>
     </head>
     <body>
         <nav class="navbar navbar-expand-lg">
@@ -32,7 +72,7 @@
         </nav>
         <div class = "main">
             <h2>Refine Search</h2>
-            <form>
+            <form onsubmit="return fetchPlaylists();">
                 <div class="form-row">
                   <div class="form-group col-md-8">
                     <label for="playlistName">Name</label>
@@ -49,9 +89,9 @@
                 <a href="home.html">Cancel</a>
             </form>
         </div>
-        <div class = "main">
+        <div class = "main" id="main">
             <h2>Playlists</h2>
-            <a href="view-playlist.html">placeholder playlist</a>
+            <div id="results"></div>
         </div>
     </body>
 </html>

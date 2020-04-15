@@ -16,8 +16,9 @@ try {
   die($ex->getMessage());
 }
 
-$stmt = $pdo->prepare("SELECT title, s_id FROM SONGS WHERE title LIKE ?");
-$stmt->execute(["%" . $_POST['search'] . "%"]);
+
+$stmt = $pdo->prepare("SELECT * FROM PLAYLISTS, USERS WHERE PLAYLISTS.name LIKE ? AND USERS.username LIKE ? AND PLAYLISTS.u_id = USERS.u_id");
+$stmt->execute(["%" . $_POST['name'] . "%", "%" . $_POST['user'] . "%"]);
 $results = $stmt->fetchAll();
 if (isset($_POST['ajax'])) { echo json_encode($results); }
 ?>

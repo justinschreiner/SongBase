@@ -27,7 +27,6 @@
                 var results = JSON.parse(this.response),
                     wrapper = document.getElementById("results");
                 wrapper.innerHTML = "";
-                console.log(results, results.length);
                 if (results.length > 0) {
                 for(var res of results) {
                     var line = document.createElement("div");
@@ -193,7 +192,6 @@
                 <div>
                     <br>
                     <input type="submit" name="search" value="Find" class = "btn btn-primary">
-                    <!-- <button type="submit" name="submitQuery" class="btn btn-primary" action="songs.php">Search</button> -->
                     <a href="home.html">Cancel</a>
                 </div>
               </form>

@@ -16,7 +16,6 @@ try {
   die($ex->getMessage());
 }
 
-// (3) SEARCH
 $stmt = $pdo->prepare("SELECT * FROM SONGS, ALBUMS WHERE ALBUMS.a_id = SONGS.a_id AND s_id LIKE ?");
 $stmt->execute(["%" . $_POST['search'] . "%"]);
 $results = $stmt->fetchAll();
