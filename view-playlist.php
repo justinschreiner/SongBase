@@ -1,3 +1,26 @@
+<?php
+    $servername = "mysql.eecs.ku.edu";
+    $username = "jschreiner";
+    $password = "pass123";
+    $database = "jschreiner";
+
+    $dbc = new mysqli($servername, $username, $password, $database);
+
+    $res_arr = array();
+    $rows = array();
+
+    if (isset($_GET['id'])){
+        $sql = "SELECT * FROM SONGS, ISIN, ALBUMS, PLAYLISTS WHERE SONGS.s_id = ISIN.s_id AND ISIN.p_id = 1
+            AND ISIN.p_id = PLAYLISTS.p_id AND ALBUMS.a_id = SONGS.a_id";
+        $result = mysqli_query($dbc, $sql) or die("Bad query: $sql");
+        while($row = mysqli_fetch_array($result)){
+            array_push($res_arr, $row);
+            echo $row['title'];
+        }
+    }
+?>
+
+
 <html>
     <head>
         <meta charset="utf-8" />
@@ -35,20 +58,48 @@
         </nav>
         <div class = "main">
             <h1>
-                Placeholder Playlist
+                Playlist
             </h1>
+            <div id = 'table'>
+
+            </div>
             <table class="playlist">
+                <h3>Songs</h3>
                 <thead>
                     <tr>
-                    <th scope="col">Song</th>
+                    <th scope="col">Title</th>
+                    <th>Artist</th>
+                    <th>Duration</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                    <th scope="row">song name</th>
+                    <td scope="row"><?php echo $row['title'] ?></td>
+                    <td><?php echo $row['artist'] ?></td>
+                    <td><?php echo round($row['duration']/60, 0), ":"; if($row['duration']%60 < 10) {echo 0;} echo $row['duration']%60; ?></td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </body>
+    <script type="text/javascript">
+        let table = document.getElementById('table');
+        table.innerHTML = "<table class='playlist'>"+
+                "<h3>Songs</h3>"+
+                "<thead>"+
+                    "<tr>"+
+                    "<th scope='col'>Title</th>"+
+                    "<th>Artist</th>"+
+                    "<th>Duration</th>"+
+                    "</tr>"+
+                "</thead>"+
+                "<tbody>"+
+                    "<tr>"+
+                    "<td scope='row'><?php echo $row['title'] ?></td>"+
+                    "<td><?php echo $row['artist'] ?></td>"+
+                    "<td><?php echo round($row['duration']/60, 0), ":"; if($row['duration']%60 < 10) {echo 0;} echo $row['duration']%60; ?></td>"+
+                    "</tr>"+
+                "</tbody>"+
+            "</table>";
+    </script>
 </html>

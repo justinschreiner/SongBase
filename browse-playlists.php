@@ -33,7 +33,7 @@
                         "<div id='results'>" + 
                             //this is where the song name is stored, if this is clicked, it will call getSongInfo() and pass this song's s_id
                             "<div class = 'result-playlist'>" +
-                                "<a href='view-playlist.html?id="+ res['p_id'] +"'>" + res['name'] + "</a>" +
+                                "<a href='view-playlist.php?id="+ res['p_id'] +"'>" + res['name'] + "</a>" +
                             "</div>" +
                         "</div>";
                     wrapper.appendChild(line);
