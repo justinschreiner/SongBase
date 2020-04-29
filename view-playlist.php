@@ -38,14 +38,14 @@
     </head>
     <body>
         <nav class="navbar navbar-expand-lg">
-            <a class="navbar-brand nav-logo" href="home.html"><i class="fas fa-music"></i>  SongBase</a>
+            <a class="navbar-brand nav-logo" href="home.php"><i class="fas fa-music"></i>  SongBase</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto my-2 my-lg-0">
                     <li>
-                        <a id = "home" class="nav-link home" href="home.html">Home</a>
+                        <a id = "home" class="nav-link home" href="home.php">Home</a>
                     </li>
                     <li class="nav-item">
                         <a id = "login" class="nav-link" href="login.html">Login</a>

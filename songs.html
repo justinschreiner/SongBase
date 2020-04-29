@@ -12,103 +12,6 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="./css/style.css" />
         <link rel="stylesheet" href="./css/songs.css" />
-        <script>
-        function fetch() {
-            // find inputs from form
-            var data = new FormData();
-            data.append('search', document.getElementById("inputName").value);
-            data.append('ajax', 1);
-    
-            // use AJAX to search and return songs
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', "fetch_songs.php", true);
-            xhr.onload = function () {
-            if (this.status==200) {
-                var results = JSON.parse(this.response),
-                    wrapper = document.getElementById("results");
-                wrapper.innerHTML = "";
-                if (results.length > 0) {
-                for(var res of results) {
-                    var line = document.createElement("div");
-                    line.className = "one-result";
-                    line.innerHTML = 
-                    "<div id='results'>" + 
-                        //this is where the song name is stored, if this is clicked, it will call getSongInfo() and pass this song's s_id
-                        "<div class = 'result-title' id = " + res['s_id'] + " onclick='getSongInfo(" + "this.id" + ")'>" +
-                            "<a data-toggle='modal' data-target='#songInfo' href='song.html'>" + res['title'] + "</a>" +
-                        "</div>" +
-                        "<div class = 'add-button'>" +
-                            "<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#addModal'>" +
-                                "Add to Playlist" +
-                            "</button>" +
-                        "</div>" +
-                    "</div>";
-                    wrapper.appendChild(line);
-                }
-                } else {
-                wrapper.innerHTML = "No results found";
-                }
-            } else {
-                alert("ERROR LOADING FILE!");
-            }
-            };
-            xhr.send(data);
-            return false;
-        }
-
-        function getSongInfo(sid){
-            // find inputs from form
-            var data = new FormData();
-            data.append('search', sid);
-            data.append('ajax', 1);
-    
-            // use AJAX to search and return songs
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', "song_info.php", true);
-            xhr.onload = function () {
-            if (this.status==200) {
-                var results = JSON.parse(this.response),
-                    wrapper = document.getElementById("song-modal");
-                wrapper.innerHTML = "";
-                console.log(results, results.length);
-                if (results.length > 0) {
-                for(var res of results) {
-                    var line = document.createElement("div");
-                    line.className = "one-result";
-                    line.innerHTML = 
-                    "<table class='songInfo'>" + 
-                        "<thead>" +
-                            "<tr>" +
-                            "<th scope='col'>Title</th>" +
-                            "<th scope='col'>Artist</th>" +
-                            "<th scope='col'>Album</th>" +
-                            "<th scope='col'>Tempo</th>" +
-                            "<th scope='col'>Duration</th>" +
-                            "</tr>" +
-                        "</thead>" +
-                        "<tbody>" +
-                            "<tr>" +
-                            "<th scope='row'>"+ res['title'] +"</th>" +
-                            "<td>"+ res['artist'] + "</td>" +
-                            "<td>"+ res['name'] + "</td>" +
-                            "<td>"+ res['tempo'] +"</td>" +
-                            "<td>"+ res['duration'] +"</td>" +
-                            "</tr>" +
-                        "</tbody>" +
-                    "</table>";
-                    wrapper.appendChild(line);
-                }
-                } else {
-                wrapper.innerHTML = "No results found";
-                }
-            } else {
-                alert("ERROR LOADING FILE!");
-            }
-            };
-            xhr.send(data);
-            return false;
-        }
-        </script>
     </head>
     <body>
         <nav class="navbar navbar-expand-lg">
@@ -132,14 +35,17 @@
         </nav>
         <div class = "main">
             <h2>Refine Search</h2>
-            <form onsubmit="return fetch();">
+            <form action="fetch_songs.php" method="POST">
                 <div class="form-row">
                   <div class="form-group col-md-8">
+<<<<<<< HEAD
+                    <label for="name">Name</label>
+=======
                     <strong><label for="name">Name</label></strong>
+>>>>>>> e36b6ba8ede72f5b2e3ae768788c6ba53ae9e959
                     <input type="songName" name = "inputName" class="form-control" id="inputName">
                   </div>
                 </div>
-                    <!-- STRETCH GOAL: BE ABLE TO MODIFY SEARCH BY THESE PARAMETERS
                     <p>
                         <a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                           <u>Advanced Search</u>
@@ -188,18 +94,32 @@
                                 </div>
                             </div>
                         </div>
-                    </div> -->
+                    </div>
                 <div>
                     <br>
-                    <input type="submit" name="search" value="Find" class = "btn btn-primary">
+                    <button type="submit" name="submitQuery" class="btn btn-primary" action="fetch_songs.php">Search</button>
                     <a href="home.php">Cancel</a>
                 </div>
+<<<<<<< HEAD
+                <button type="submit" name="submitQuery" class="btn btn-primary" action="fetch_songs.php">Search</button>
+                <a href="home.php">Cancel</a>
+=======
+>>>>>>> e36b6ba8ede72f5b2e3ae768788c6ba53ae9e959
               </form>
         </div>
         <div class = "results">
             <h2>Songs</h2>
-                <div id="results"></div>
+            <div class = "one-result">
+                <div class = "result-title">
+                    <a data-toggle="modal" data-target="#songInfo" href="song.html">Placeholder song</a>
+                </div>
+                <div class = "add-button">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">
+                        Add to Playlist
+                    </button>
+                </div>
             </div>
+        </div>
 
         <div class="modal fade" id="addModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -234,21 +154,40 @@
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body" id="song-modal">
+                <div class="modal-body">
+                    <table class="songInfo">
+                        <thead>
+                            <tr>
+                            <th scope="col">Title</th>
+                            <th scope="col">Artist</th>
+                            <th scope="col">Album</th>
+                            <th scope="col">Tempo</th>
+                            <th scope="col">Duration</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                            <th scope="row">song name</th>
+                            <td>artist name</td>
+                            <td>album name</td>
+                            <td>100 </td>
+                            <td>100 </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#addModal">Add to playlist</button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">Add to playlist</button>
                 </div>
                 </div>
             </div>
         </div>
-        
-        <!-- STRETCH GOAL: RETURN MATCHING ALBUMS HERE.  NAMES OF ABLUMS CAN BE CLICKED, WHICH WILL AUTO SEARCH SONGS IN THAT ALBUM.
+
         <div class = "results">
             <h2>Albums</h2>
             <div class = "one-result">
                 Placeholder album
             </div>
-        </div> -->
+        </div>
     </body>
 </html>
