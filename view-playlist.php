@@ -15,11 +15,9 @@
         $result = mysqli_query($dbc, $sql) or die("Bad query: $sql");
         while($row = mysqli_fetch_array($result)){
             array_push($res_arr, $row);
-            echo $row['title'];
         }
     }
 ?>
-
 
 <html>
     <head>
@@ -64,42 +62,31 @@
 
             </div>
             <table class="playlist">
-                <h3>Songs</h3>
-                <thead>
-                    <tr>
-                    <th scope="col">Title</th>
-                    <th>Artist</th>
-                    <th>Duration</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                    <td scope="row"><?php echo $row['title'] ?></td>
-                    <td><?php echo $row['artist'] ?></td>
-                    <td><?php echo round($row['duration']/60, 0), ":"; if($row['duration']%60 < 10) {echo 0;} echo $row['duration']%60; ?></td>
-                    </tr>
-                </tbody>
             </table>
         </div>
     </body>
     <script type="text/javascript">
+        var results = <?php echo json_encode($res_arr)?>;
         let table = document.getElementById('table');
-        table.innerHTML = "<table class='playlist'>"+
-                "<h3>Songs</h3>"+
+        var html =
+            "<table class='playlist'>"+
                 "<thead>"+
                     "<tr>"+
-                    "<th scope='col'>Title</th>"+
-                    "<th>Artist</th>"+
-                    "<th>Duration</th>"+
+                        "<th scope='col'>Title</th>"+
+                        "<th>Artist</th>"+
+                        "<th>Duration</th>"+
                     "</tr>"+
                 "</thead>"+
-                "<tbody>"+
-                    "<tr>"+
-                    "<td scope='row'><?php echo $row['title'] ?></td>"+
-                    "<td><?php echo $row['artist'] ?></td>"+
-                    "<td><?php echo round($row['duration']/60, 0), ":"; if($row['duration']%60 < 10) {echo 0;} echo $row['duration']%60; ?></td>"+
-                    "</tr>"+
-                "</tbody>"+
-            "</table>";
+                "<tbody>";
+        for (res of results){
+            html = html + 
+            "<tr>" +
+                "<td>" + res['title'] + "</td>" +
+                "<td>" + res['artist'] + " </td>" +
+                "<td>" + res['duration'] + "</td>" + 
+            "</tr>";
+        }
+        html = html + "</tbody>" + "</table";
+        table.innerHTML = html;
     </script>
 </html>
