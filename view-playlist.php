@@ -55,9 +55,6 @@
             </div>
         </nav>
         <div class = "main">
-            <h1>
-                Playlist
-            </h1>
             <div id = 'table'>
 
             </div>
@@ -67,9 +64,10 @@
     </body>
     <script type="text/javascript">
         var results = <?php echo json_encode($res_arr)?>;
+        console.log(results[0]['name']);
         let table = document.getElementById('table');
-        var html =
-            "<table class='playlist'>"+
+        var html = "<h1>" + results[0]['name'] + "<h1>" +
+            "<table class='playlist'>" +
                 "<thead>"+
                     "<tr>"+
                         "<th scope='col'>Title</th>"+
