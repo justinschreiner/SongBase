@@ -37,10 +37,8 @@
                         "<div class = 'result-title' id = " + res['s_id'] + " onclick='getSongInfo(" + "this.id" + ")'>" +
                             "<a data-toggle='modal' data-target='#songInfo' href='song.html'>" + res['title'] + "</a>" +
                         "</div>" +
-                        "<div class = 'add-button'>" +
-                            "<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#addModal'>" +
-                                "Add to Playlist" +
-                            "</button>" +
+                        "<div class = 'add-button' id="+ res['s_id'] + " onclick='fetchUserPlaylists(this.id)'>" +
+                            "<button data-toggle='modal' data-target='#addModal' class='btn btn-primary'>Add to Playlist</button>" + 
                         "</div>" +
                     "</div>";
                     wrapper.appendChild(line);
@@ -108,6 +106,47 @@
             xhr.send(data);
             return false;
         }
+
+        function fetchUserPlaylists(sid){
+            // find inputs from form
+            var data = new FormData();
+            var uid = <?php session_start(); echo $_SESSION['uid']; ?>;
+
+            data.append('uid', uid);
+            data.append('ajax', 1);
+    
+            // use AJAX to search and return playlists
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', "fetch-user-playlists.php", true);
+            xhr.onload = function () {
+            if (this.status==200) {
+                var results = JSON.parse(this.response),
+                    wrapper = document.getElementById("userPlaylists");
+                wrapper.innerHTML = "";
+                if (results.length > 0) {
+                for(var res of results) {
+                    var line = document.createElement("div");
+                    line.className = "playlist-result";
+                    line.innerHTML=
+                    "<div class='form-check'>" +
+                    "<input class='form-check-input' type='checkbox' id='playlist'>" +
+                        "<label class='form-check-label' for='playlist'>" + 
+                            res['name'] +
+                        "</label>" +
+                    "</div>";
+                    wrapper.appendChild(line);
+                }
+                } else {
+                wrapper.innerHTML = "No results found";
+                }
+            } else {
+                alert("ERROR LOADING FILE!");
+            }
+            };
+            xhr.send(data);
+            return false;
+        }
+
         </script>
     </head>
     <body>
@@ -213,12 +252,8 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="playlist">
-                        <label class="form-check-label" for="playlist">
-                            Placeholder playlist
-                        </label>
-                    </div>
+                    <form id='userPlaylists'>
+                    </form>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-primary">Add</button>
@@ -239,7 +274,7 @@
                 <div class="modal-body" id="song-modal">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#addModal">Add to playlist</button>
+                    <button type="submit" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#addModal">Add to playlist</button>
                 </div>
                 </div>
             </div>
