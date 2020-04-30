@@ -16,7 +16,7 @@ try {
   die($ex->getMessage());
 }
 
-$stmt = $pdo->prepare("SELECT name FROM PLAYLISTS WHERE u_id = ?");
+$stmt = $pdo->prepare("SELECT name, p_id FROM PLAYLISTS WHERE u_id = ?");
 $stmt->execute([$_POST['uid']]);
 $results = $stmt->fetchAll();
 if (isset($_POST['ajax'])) { echo json_encode($results); }

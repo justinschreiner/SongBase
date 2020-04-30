@@ -129,13 +129,16 @@
                     line.className = "playlist-result";
                     line.innerHTML=
                     "<div class='form-check'>" +
-                    "<input class='form-check-input' type='checkbox' id='playlist'>" +
-                        "<label class='form-check-label' for='playlist'>" + 
+                    "<input class='form-check-input' name ='check_list[]' type='checkbox' value=" + res['p_id'] + ">" +
+                        "<label class='form-check-label' for="+ res['p_id'] +">" + 
                             res['name'] +
                         "</label>" +
                     "</div>";
                     wrapper.appendChild(line);
                 }
+                var sidVal = document.createElement("div");
+                sidVal.innerHTML="<input type='hidden' name='sid' value=" + sid + ">";
+                wrapper.appendChild(sidVal);
                 } else {
                 wrapper.innerHTML = "No results found";
                 }
@@ -252,11 +255,11 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                    <form id='userPlaylists'>
+                    <form action="add-to-playlist.php" method="post">
+                        <div id='userPlaylists'></div>
+                        <br>
+                        <button id='add-btn' type="submit" class="btn btn-primary">Add Song</button>
                     </form>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-primary">Add</button>
                 </div>
               </div>
             </div>
