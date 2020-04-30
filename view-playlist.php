@@ -64,7 +64,6 @@
     </body>
     <script type="text/javascript">
         var results = <?php echo json_encode($res_arr)?>;
-        console.log(results[0]['name']);
         let table = document.getElementById('table');
         var html = "<h1>" + results[0]['name'] + "<h1>" +
             "<table class='playlist'>" +

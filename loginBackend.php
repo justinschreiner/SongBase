@@ -24,7 +24,7 @@
         $row = $userResult->fetch_assoc();
         if($row['username'] == $username)
           {
-            $checkPass = "SELECT password
+            $checkPass = "SELECT password, u_id
                           FROM USERS
                           WHERE USERS.username = '".$username."'";
             $passResult = $mysqli->query($checkPass);
@@ -33,7 +33,7 @@
               {
                 echo "Successfully logged in";
                 $_SESSION['username'] = $username;
-                $_SESSION['uid'] = $row['u_id'];
+                $_SESSION['uid'] = $checkPassRow['u_id'];
                 echo $_SESSION['username'];
                 header('Refresh: .3; home.php');
               }

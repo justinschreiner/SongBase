@@ -1,3 +1,4 @@
+<?php session_start();?>
 <html>
     <head>
         <meta charset="utf-8" />
@@ -34,22 +35,22 @@
             </div>
         </nav>
         <div class = "main">
-            <form>
+            <form action="create-playlist.php" method="post">
                 <h2>Create playlist</h2>
                 <div class="form-row">
                   <div class="form-group col-md-8">
                     <label for="createPlaylistName">Name</label>
-                    <input type="createPlaylistName" class="form-control" id="createPlaylistName">
+                    <input type="text" name="createPlaylistName" class="form-control" id="createPlaylistName">
                   </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-8">
-                      <label for="createPlaylistUser">Description (optional)</label>
-                      <input type="createPlaylistUser" class="form-control" id="createPlaylistUser">
+                      <label for="createPlaylistDescription">Description (optional)</label>
+                      <input type="text" name="createPlaylistDescription" class="form-control" id="createPlaylistDescription">
                     </div>
                 </div>
                 <div>
-                    <a href="songs.php" class="btn btn-primary">Add Songs</a>
+                    <button type="submit" name="submit" class="btn btn-primary">Add Songs</button>
                     <a href="home.php">Cancel</a>
                 </div> 
             </form>

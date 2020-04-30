@@ -131,6 +131,8 @@
             </div>
         </nav>
         <div class = "main">
+            <h1>Find Songs</h1>
+            <br>
             <h2>Refine Search</h2>
             <form onsubmit="return fetch();">
                 <div class="form-row">

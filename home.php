@@ -31,7 +31,7 @@ session_start();
                         <a id = "logout" class="nav-link" href="index.html">Logout</a>
                     </li>
                     <li class="nav-item">
-                        <a id="user" class="nav-link"> Welcome <?php echo $_SESSION['username']; ?>  </a>
+                        <a id="user" class="nav-link"> Welcome, <?php echo $_SESSION['username']; ?>!</a>
                     </li>
                 </ul>
             </div>
@@ -43,7 +43,7 @@ session_start();
                 <div class = "choice"><a href= "songs.php">Browse songs</a></div>
                 <div class = "choice"><a href= "browse-playlists.php">Browse playlists</a></div>
                 <div class = "choice"><a href= "my-playlists.html">My playlists</a></div>
-                <div class = "choice"><a href= "new-playlist.html">Create playlist</a></div>
+                <div class = "choice"><a href= "new-playlist.php">Create playlist</a></div>
             </div>
         </div>
     </body>
