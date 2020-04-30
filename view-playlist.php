@@ -8,9 +8,10 @@
 
     $res_arr = array();
     $rows = array();
+    $pid = $_GET['id'];
 
-    if (isset($_GET['id'])){
-        $sql = "SELECT * FROM SONGS, ISIN, ALBUMS, PLAYLISTS WHERE SONGS.s_id = ISIN.s_id AND ISIN.p_id = 1
+    if (isset($pid)){
+        $sql = "SELECT * FROM SONGS, ISIN, ALBUMS, PLAYLISTS WHERE SONGS.s_id = ISIN.s_id AND ISIN.p_id = $pid 
             AND ISIN.p_id = PLAYLISTS.p_id AND ALBUMS.a_id = SONGS.a_id";
         $result = mysqli_query($dbc, $sql) or die("Bad query: $sql");
         while($row = mysqli_fetch_array($result)){
