@@ -42,7 +42,7 @@ session_start();
             <div class = "options">
                 <div class = "choice"><a href= "songs.php">Browse songs</a></div>
                 <div class = "choice"><a href= "browse-playlists.php">Browse playlists</a></div>
-                <div class = "choice"><a href= "my-playlists.html">My playlists</a></div>
+                <div class = "choice"><a href= "my-playlists.php">My playlists</a></div>
                 <div class = "choice"><a href= "new-playlist.php">Create playlist</a></div>
             </div>
         </div>

@@ -16,7 +16,7 @@
             data.append('name', document.getElementById("playlistName").value);
             data.append('user', document.getElementById("playlistUser").value);
             data.append('ajax', 1);
-    
+	 console.log(data);
             // use AJAX to search and return songs
             var xhr = new XMLHttpRequest();
             xhr.open('POST', "fetch-playlists.php", true);
@@ -24,13 +24,15 @@
             if (this.status==200) {
                 var results = JSON.parse(this.response),
                     wrapper = document.getElementById("results");
+                    console.log(JSON.parse(this.response));
+
                 wrapper.innerHTML = "";
                 if (results.length > 0) {
                 for(var res of results) {
                     var line = document.createElement("div");
                     line.className = "res";
                     line.innerHTML =
-                        "<div id='results'>" + 
+                        "<div id='results'>" +
                             //this is where the song name is stored, if this is clicked, it will call getSongInfo() and pass this song's s_id
                             "<div class = 'result-playlist'>" +
                                 "<a href='view-playlist.php?id="+ res['p_id'] +"'>" + res['name'] + "</a>" +

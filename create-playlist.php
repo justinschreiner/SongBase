@@ -12,8 +12,8 @@ if($mysqli->connect_errno)
   }
 if(!empty($pname))
   {
+
       $query = "INSERT INTO PLAYLISTS (u_id, name, description) VALUES ($uid, '$pname', '$pdesc')";
-      echo $query;
       $mysqli->query($query);
       header('Refresh: .1; songs.php');
   }
