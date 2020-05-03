@@ -59,7 +59,8 @@ if (isset($pid)) {
     </nav>
     <div class="main">
         <div id='table'>
-
+            <h3>No Songs Yet<h3>
+                    <a href="songs.php"><button class='btn btn-primary'>Add Songs</button></a>
         </div>
         <table class="playlist">
         </table>
