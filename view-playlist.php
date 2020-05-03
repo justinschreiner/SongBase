@@ -80,11 +80,23 @@ if (isset($pid)) {
         "</thead>" +
         "<tbody>";
     for (res of results) {
+        var dur = res['duration'];
+        var min = Math.floor(dur / 60);
+        var sec = Math.round(dur % 60);
+        if (sec == 60) {
+            min = min + 1;
+            sec = 60;
+        }
+        var zero = "";
+        if (sec < 10) {
+            zero = "0";
+        }
+
         html = html +
             "<tr>" +
             "<td>" + res['title'] + "</td>" +
             "<td>" + res['artist'] + " </td>" +
-            "<td>" + res['duration'] + "</td>" +
+            "<td>" + min + ':' + zero + sec + "</td>" +
             "</tr>";
     }
     html = html + "</tbody>" + "</table";
