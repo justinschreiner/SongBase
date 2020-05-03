@@ -145,7 +145,8 @@
                         sidVal.innerHTML = "<input type='hidden' name='sid' value=" + sid + ">";
                         wrapper.appendChild(sidVal);
                     } else {
-                        wrapper.innerHTML = "<h3>You have not created any playlists yet.<h3> <a href='new-playlist.php'><button class='btn btn-primary'>Create Playlist</button></a>";
+                        wrapper.innerHTML = "<h3>You have not created any playlists yet.<h3> <a href='new-playlist.php'>" +
+                            "<button type='button' class='btn btn-primary'>Create Playlist<button></a>";
                     }
                 } else {
                     alert("ERROR LOADING FILE!");
