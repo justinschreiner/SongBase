@@ -203,6 +203,10 @@
             xhr.send(data);
             return false;
         }
+
+        function justin() {
+            console.log("justin");
+        }
     </script>
 </head>
 

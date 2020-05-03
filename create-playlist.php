@@ -20,5 +20,5 @@ if (!empty($pname)) {
 
   $query = "INSERT INTO PLAYLISTS (u_id, name, description) VALUES ($uid, '$pname', '$pdesc')";
   $mysqli->query($query);
-  header('Refresh: .1; songs.php');
+  header('Refresh: 0; songs.php');
 }
