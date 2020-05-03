@@ -138,11 +138,14 @@
                                 "</div>";
                             wrapper.appendChild(line);
                         }
+                        var bt = document.createElement("div")
+                        bt.innerHTML = "<button id='add-btn' type='submit' class='btn btn-primary'>Add Song</button>"
+                        wrapper.appendChild(bt);
                         var sidVal = document.createElement("div");
                         sidVal.innerHTML = "<input type='hidden' name='sid' value=" + sid + ">";
                         wrapper.appendChild(sidVal);
                     } else {
-                        wrapper.innerHTML = "No results found";
+                        wrapper.innerHTML = "<h3>You have not created any playlists yet.<h3> <a href='new-playlist.php'><button class='btn btn-primary'>Create Playlist</button></a>";
                     }
                 } else {
                     alert("ERROR LOADING FILE!");
@@ -258,9 +261,8 @@
                 </div>
                 <div class="modal-body">
                     <form action="add-to-playlist.php" method="post">
-                        <div id='userPlaylists'></div>
-                        <br>
-                        <button id='add-btn' type="submit" class="btn btn-primary">Add Song</button>
+                        <div id='userPlaylists'>
+                        </div>
                     </form>
                 </div>
             </div>
