@@ -72,6 +72,18 @@
                     console.log(results, results.length);
                     if (results.length > 0) {
                         for (var res of results) {
+                            var dur = res['duration'];
+                            var min = Math.floor(dur / 60);
+                            var sec = Math.round(dur % 60);
+                            if (sec == 60) {
+                                min = min + 1;
+                                sec = 60;
+                            }
+                            var zero = "";
+                            if (sec < 10) {
+                                zero = "0";
+                            }
+
                             var line = document.createElement("div");
                             line.className = "one-result";
                             line.innerHTML =
@@ -91,7 +103,7 @@
                                 "<td>" + res['artist'] + "</td>" +
                                 "<td>" + res['name'] + "</td>" +
                                 "<td>" + res['tempo'] + "</td>" +
-                                "<td>" + res['duration'] + "</td>" +
+                                "<td>" + min + ':' + zero + sec + "</td>" +
                                 "</tr>" +
                                 "</tbody>" +
                                 "</table>";
