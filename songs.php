@@ -18,6 +18,42 @@
             // find inputs from form
             var data = new FormData();
             data.append('search', document.getElementById("inputName").value);
+
+            // find tempo comparison user provided 
+            if (document.getElementById('tempoLess').checked) {
+                data.append('tempoComparison', "less");
+            } else if (document.getElementById('tempoGreater').checked) {
+                data.append('tempoComparison', "greater");
+            }
+
+            // find length comparison user provided 
+            if (document.getElementById('lengthLess').checked) {
+                data.append('lengthComparison', "less");
+            } else if (document.getElementById('lengthGreater').checked) {
+                data.append('lengthComparison', "greater");
+            }
+
+            // Add tempo and length values or set to null if not provided
+            if (!document.getElementById('tempoValue').value) {
+                if (document.getElementById('tempoLess').checked) {
+                    data.append('tempoValue', 9999999999);
+                } else {
+                    data.append('tempoValue', -1);
+                }
+            } else {
+                data.append('tempoValue', document.getElementById('tempoValue').value);
+            }
+
+            if (!document.getElementById('lengthValue').value) {
+                if (document.getElementById('lengthLess').checked) {
+                    data.append('lengthValue', 9999999999);
+                } else {
+                    data.append('lengthValue', -1);
+                }
+            } else {
+                data.append('lengthValue', document.getElementById('lengthValue').value);
+            }
+
             data.append('ajax', 1);
 
             // use AJAX to search and return songs
@@ -201,56 +237,55 @@
                     <input type="songName" name="inputName" class="form-control" id="inputName">
                 </div>
             </div>
-            <!-- STRETCH GOAL: BE ABLE TO MODIFY SEARCH BY THESE PARAMETERS
-                    <p>
-                        <a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                          <u>Advanced Search</u>
-                        </a>
-                    </p>
-                    <div class="collapse" id="collapseExample">
-                        <div class="card card-body">   
-                            <strong>Tempo</strong>
-                            <div class="form-row">
-                                <div class="form-group col-md-8">
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="tempoNone" name="tempoComparison" class="custom-control-input">
-                                        <label class="custom-control-label" for="tempoNone">All Tempos</label>
-                                    </div>
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="tempoLess" name="tempoComparison" class="custom-control-input">
-                                        <label class="custom-control-label" for="tempoLess">Less than</label>
-                                    </div>
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="tempoGreater" name="tempoComparison" class="custom-control-input">
-                                        <label class="custom-control-label" for="tempoGreater">Greater than</label>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="tempoValue" class="form-control" id="tempoValue" placeholder="120">
-                                    </div>
-                                </div>
+            <p>
+                <a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    <u>Advanced Search</u>
+                </a>
+            </p>
+            <div class="collapse" id="collapseExample">
+                <div class="card card-body">
+                    <strong>Tempo</strong>
+                    <div class="form-row">
+                        <div class="form-group col-md-8">
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="tempoNone" name="tempoComparison" class="custom-control-input" value=1>
+                                <label class="custom-control-label" for="tempoNone">All Tempos</label>
                             </div>
-                            <strong>Length (seconds)</strong>
-                            <div class = "form-row">
-                                <div class="form-group col-md-8">
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="lengthNone" name="lengthComparison" class="custom-control-input">
-                                        <label class="custom-control-label" for="lengthNone">All Lengths</label>
-                                    </div>
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="lengthLess" name="lengthComparison" class="custom-control-input">
-                                        <label class="custom-control-label" for="lengthLess">Less than</label>
-                                    </div>
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="lengthGreater" name="lengthComparison" class="custom-control-input">
-                                        <label class="custom-control-label" for="lengthGreater">Greater than</label>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="tempoValue" class="form-control" id="tempoValue" placeholder="180">
-                                    </div>
-                                </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="tempoLess" name="tempoComparison" class="custom-control-input" value=1>
+                                <label class="custom-control-label" for="tempoLess">Less than</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="tempoGreater" name="tempoComparison" class="custom-control-input" value=1>
+                                <label class="custom-control-label" for="tempoGreater">Greater than</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="number" class="form-control" id="tempoValue" placeholder="optional">
                             </div>
                         </div>
-                    </div> -->
+                    </div>
+                    <strong>Length (seconds)</strong>
+                    <div class="form-row">
+                        <div class="form-group col-md-8">
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="lengthNone" name="lengthComparison" class="custom-control-input">
+                                <label class="custom-control-label" for="lengthNone">All Lengths</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="lengthLess" name="lengthComparison" class="custom-control-input">
+                                <label class="custom-control-label" for="lengthLess">Less than</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="lengthGreater" name="lengthComparison" class="custom-control-input">
+                                <label class="custom-control-label" for="lengthGreater">Greater than</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="number" class="form-control" id="lengthValue" placeholder="optional">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div>
                 <br>
                 <input type="submit" name="search" value="Find" class="btn btn-primary">

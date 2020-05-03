@@ -8,16 +8,54 @@ define('DB_PASSWORD', 'pass123');
 try {
   $pdo = new PDO(
     "mysql:host=" . DB_HOST . ";charset=" . DB_CHARSET . ";dbname=" . DB_NAME,
-    DB_USER, DB_PASSWORD, [ PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    PDO::ATTR_EMULATE_PREPARES => false ]
+    DB_USER,
+    DB_PASSWORD,
+    [
+      PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+      PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+      PDO::ATTR_EMULATE_PREPARES => false
+    ]
   );
 } catch (Exception $ex) {
   die($ex->getMessage());
 }
 
-$stmt = $pdo->prepare("SELECT title, s_id FROM SONGS WHERE title LIKE ?");
-$stmt->execute(["%" . $_POST['search'] . "%"]);
+if ($_POST['tempoComparison'] == 'less') {
+  if ($_POST['lengthComparison'] == 'less') {
+    $stmt = $pdo->prepare("SELECT title, s_id FROM SONGS WHERE title LIKE ? AND tempo < ? AND duration < ?");
+    $stmt->execute(["%" . $_POST['search'] . "%", $_POST['tempoValue'], $_POST['lengthValue']]);
+  } else if ($_POST['lengthComparison'] == 'greater') {
+    $stmt = $pdo->prepare("SELECT title, s_id FROM SONGS WHERE title LIKE ? AND tempo < ? AND duration > ?");
+    $stmt->execute(["%" . $_POST['search'] . "%", $_POST['tempoValue'], $_POST['lengthValue']]);
+  } else {
+    $stmt = $pdo->prepare("SELECT title, s_id FROM SONGS WHERE title LIKE ? AND tempo < ?");
+    $stmt->execute(["%" . $_POST['search'] . "%", $_POST['tempoValue']]);
+  }
+} else if ($_POST['tempoComparison'] == 'greater') {
+  if ($_POST['lengthComparison'] == 'less') {
+    $stmt = $pdo->prepare("SELECT title, s_id FROM SONGS WHERE title LIKE ? AND tempo > ? AND duration < ?");
+    $stmt->execute(["%" . $_POST['search'] . "%", $_POST['tempoValue'], $_POST['lengthValue']]);
+  } else if ($_POST['lengthComparison'] == 'greater') {
+    $stmt = $pdo->prepare("SELECT title, s_id FROM SONGS WHERE title LIKE ? AND tempo > ? AND duration > ?");
+    $stmt->execute(["%" . $_POST['search'] . "%", $_POST['tempoValue'], $_POST['lengthValue']]);
+  } else {
+    $stmt = $pdo->prepare("SELECT title, s_id FROM SONGS WHERE title LIKE ? AND tempo > ?");
+    $stmt->execute(["%" . $_POST['search'] . "%", $_POST['tempoValue']]);
+  }
+} else {
+  if ($_POST['lengthComparison'] == 'less') {
+    $stmt = $pdo->prepare("SELECT title, s_id FROM SONGS WHERE title LIKE ? AND duration < ?");
+    $stmt->execute(["%" . $_POST['search'] . "%", $_POST['lengthValue']]);
+  } else if ($_POST['lengthComparison'] == 'greater') {
+    $stmt = $pdo->prepare("SELECT title, s_id FROM SONGS WHERE title LIKE ? AND duration > ?");
+    $stmt->execute(["%" . $_POST['search'] . "%", $_POST['lengthValue']]);
+  } else {
+    $stmt = $pdo->prepare("SELECT title, s_id FROM SONGS WHERE title LIKE ?");
+    $stmt->execute(["%" . $_POST['search'] . "%"]);
+  }
+}
+
 $results = $stmt->fetchAll();
-if (isset($_POST['ajax'])) { echo json_encode($results); }
-?>
+if (isset($_POST['ajax'])) {
+  echo json_encode($results);
+}
