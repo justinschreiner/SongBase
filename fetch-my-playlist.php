@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 define('DB_HOST', 'mysql.eecs.ku.edu');
 define('DB_NAME', 'jschreiner');
 define('DB_CHARSET', 'utf8');
@@ -15,10 +17,10 @@ try {
 } catch (Exception $ex) {
   die($ex->getMessage());
 }
+$id = $_POST['uid'];
 
-
-$stmt = $pdo->prepare("SELECT * FROM PLAYLISTS, USERS WHERE PLAYLISTS.name LIKE ? AND USERS.username LIKE ? AND PLAYLISTS.u_id = USERS.u_id");
-$stmt->execute(["%" . $_POST['name'] . "%", "%" . $_POST['user'] . "%"]);
+$stmt = $pdo->prepare("SELECT * FROM PLAYLISTS WHERE PLAYLISTS.u_id = $id");
+$stmt->execute();
 $results = $stmt->fetchAll();
 if (isset($_POST['ajax'])) { echo json_encode($results); }
 ?>
