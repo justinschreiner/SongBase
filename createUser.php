@@ -24,6 +24,10 @@ if (!empty($username) && !empty($password)) {
 
     if ($mysqli->query($insertQuery) == TRUE) {
       $_SESSION['username'] = $username;
+      $uid = "SELECT u_id FROM USERS WHERE USERS.username = '". $username ."'";
+      $uid = $mysqli->query($uid);
+      $row = $uid->fetch_assoc();
+      $_SESSION['uid'] = $row['u_id'];
       header('Refresh: 0; home.php');
     }
   }
@@ -35,3 +39,7 @@ if (!empty($username) && !empty($password)) {
   //  echo '<script>emptyField()</script>'
 
 }
+
+
+
+?>
