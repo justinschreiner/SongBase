@@ -142,7 +142,10 @@
                                 "<td>" + min + ':' + zero + sec + "</td>" +
                                 "</tr>" +
                                 "</tbody>" +
-                                "</table>";
+                                "</table>" +
+                                "<div class = 'add-button' id=" + res['s_id'] + " onclick='fetchUserPlaylists(this.id)'>" +
+                                "<button data-dismiss='modal' data-toggle='modal' data-target='#addModal' class='btn btn-primary'>Add to Playlist</button>" +
+                                "</div>";
                             wrapper.appendChild(line);
                         }
                     } else {
@@ -331,9 +334,6 @@
                     </button>
                 </div>
                 <div class="modal-body" id="song-modal">
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#addModal">Add to playlist</button>
                 </div>
             </div>
         </div>
