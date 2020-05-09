@@ -28,6 +28,10 @@ if (!empty($username) && !empty($password)) {
 
     if ($mysqli->query($insertQuery) == TRUE) { // Log user in and store their username as a session variable
       $_SESSION['username'] = $username;
+      $uid = "SELECT u_id FROM USERS WHERE USERS.username = '". $username ."'";
+      $uid = $mysqli->query($uid);
+      $row = $uid->fetch_assoc();
+      $_SESSION['uid'] = $row['u_id'];
       header('Refresh: 0; home.php');
     }
   }
@@ -35,3 +39,7 @@ if (!empty($username) && !empty($password)) {
   echo "Do not leave any fields empty, please try again.";
   header('Refresh: 1.5; create.html');
 }
+
+
+
+?>
