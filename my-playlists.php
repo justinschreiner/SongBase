@@ -16,14 +16,20 @@
     <link rel="stylesheet" href="./css/songs.css" />
 </head>
 <script>
+    /**
+     * Finds all playlists belonging to current user using AJAX and
+     * formats results using HTML.
+     *
+     * @return {Boolean} Returns False.
+     */
     function fetchPlaylists() {
-        // find inputs from form
+        // find uid from session
         var data = new FormData();
         var curUser = "<?php echo $_SESSION['uid']; ?>";
         data.append('uid', curUser);
         data.append('ajax', 1);
         console.log(data.get('uid'))
-        // use AJAX to search and return songs
+        // use AJAX to search and return playlists
         var xhr = new XMLHttpRequest();
         xhr.open('POST', "fetch-my-playlist.php", true);
         xhr.onload = function() {
@@ -31,20 +37,19 @@
                 var results = JSON.parse(this.response),
                     wrapper = document.getElementById("results");
                 wrapper.innerHTML = "";
-                if (results.length > 0) {
+                if (results.length > 0) { // Executes if the user has created at least one playlist
                     for (var res of results) {
                         var line = document.createElement("div");
                         line.className = "res";
                         line.innerHTML =
                             "<div id='results'>" +
-                            //this is where the song name is stored, if this is clicked, it will call getSongInfo() and pass this song's s_id
                             "<div class = 'result-playlist'>" +
-                            "<a href='view-playlist.php?id=" + res['p_id'] + "'>" + res['name'] + "</a>" +
+                            "<a href='view-playlist.php?id=" + res['p_id'] + "'>" + res['name'] + "</a>" + // If user clicks a playlist name, this directs them to view-playlist.php and passes the playlist id
                             "</div>" +
                             "</div>";
                         wrapper.appendChild(line);
                     }
-                } else {
+                } else { // Message displayed if the user has not created any playlists
                     wrapper.innerHTML = "No results found";
                 }
             } else {

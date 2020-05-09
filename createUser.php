@@ -1,4 +1,9 @@
+<!-- 
+Adds new user to MySQL USERS table
+-->
+
 <?php
+// Initialize MySQL connection
 session_start();
 error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 $username = $_POST['username'];
@@ -14,24 +19,19 @@ if (!empty($username) && !empty($password)) {
                   FROM USERS
                   WHERE USERS.username = '" . $username . "'";
   $testResult = $mysqli->query($testQuery);
-  if ($testResult->num_rows > 0) {
-    echo $_POST['username'];
-    echo $_POST['password'];
-    //    header('Refresh: .1; create.html');
-  } else if ($password == $verifyPass && !empty($username) && !empty($password)) {
+  if ($testResult->num_rows > 0) { // Check if username already exists
+    echo "Username already taken, please choose another.";
+    header('Refresh: 1.5; create.html');
+  } else if ($password == $verifyPass && !empty($username) && !empty($password)) { // Add user to USERS table
     $password = password_hash($password, PASSWORD_DEFAULT);
     $insertQuery = "INSERT INTO USERS(username,password) VALUES ('$username', '$password')";
 
-    if ($mysqli->query($insertQuery) == TRUE) {
+    if ($mysqli->query($insertQuery) == TRUE) { // Log user in and store their username as a session variable
       $_SESSION['username'] = $username;
       header('Refresh: 0; home.php');
     }
   }
-} else {
-  echo $_POST['username'];
-  echo $_POST['password1'];
-  echo $_POST['password2'];
-  header('Refresh: 0; create.html');
-  //  echo '<script>emptyField()</script>'
-
+} else { // Executes if one or more of the input fields is left empty
+  echo "Do not leave any fields empty, please try again.";
+  header('Refresh: 1.5; create.html');
 }

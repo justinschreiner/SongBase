@@ -11,6 +11,12 @@
     <link rel="stylesheet" href="./css/style.css" />
     <link rel="stylesheet" href="./css/songs.css" />
     <script>
+        /**
+         * Pulls inputs from playlist search box and passes to AJAX to execute 
+         * query.  Formats results using HTML.
+         *
+         * @return {Boolean} Returns False.
+         */
         function fetchPlaylists() {
             // find inputs from form
             var data = new FormData();
@@ -18,30 +24,27 @@
             data.append('user', document.getElementById("playlistUser").value);
             data.append('ajax', 1);
             console.log(data);
-            // use AJAX to search and return songs
+            // Uses AJAX to search and return playlists
             var xhr = new XMLHttpRequest();
             xhr.open('POST', "fetch-playlists.php", true);
             xhr.onload = function() {
                 if (this.status == 200) {
                     var results = JSON.parse(this.response),
                         wrapper = document.getElementById("results");
-                    console.log(JSON.parse(this.response));
-
                     wrapper.innerHTML = "";
-                    if (results.length > 0) {
+                    if (results.length > 0) { // Executes if at least one playlist is found
                         for (var res of results) {
                             var line = document.createElement("div");
                             line.className = "res";
                             line.innerHTML =
                                 "<div id='results'>" +
-                                //this is where the song name is stored, if this is clicked, it will call getSongInfo() and pass this song's s_id
                                 "<div class = 'result-playlist'>" +
-                                "<a href='view-playlist.php?id=" + res['p_id'] + "'>" + res['name'] + "</a>" +
+                                "<a href='view-playlist.php?id=" + res['p_id'] + "'>" + res['name'] + "</a>" + // If user clicks a playlist name, this directs them to view-playlist.php and passes the playlist id
                                 "</div>" +
                                 "</div>";
                             wrapper.appendChild(line);
                         }
-                    } else {
+                    } else { // Executes if no playlists are found.
                         wrapper.innerHTML = "No results found";
                     }
                 } else {

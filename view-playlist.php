@@ -1,9 +1,16 @@
 <?php
+
+/** 
+ * Returns data from selected playlist
+ *
+ * @return [res_arr]  2 dimensional array holding data for all songs in a playlist
+ **/
+
+// Initialize MySQL connection
 $servername = "mysql.eecs.ku.edu";
 $username = "jschreiner";
 $password = "pass123";
 $database = "jschreiner";
-
 $dbc = new mysqli($servername, $username, $password, $database);
 
 $res_arr = array();
@@ -11,9 +18,12 @@ $rows = array();
 $pid = $_GET['id'];
 
 if (isset($pid)) {
+    // Create and execute query
     $sql = "SELECT * FROM SONGS, ISIN, ALBUMS, PLAYLISTS WHERE SONGS.s_id = ISIN.s_id AND ISIN.p_id = $pid 
             AND ISIN.p_id = PLAYLISTS.p_id AND ALBUMS.a_id = SONGS.a_id";
     $result = mysqli_query($dbc, $sql) or die("Bad query: $sql");
+
+    // Append each result to JS array
     while ($row = mysqli_fetch_array($result)) {
         array_push($res_arr, $row);
     }
@@ -67,6 +77,9 @@ if (isset($pid)) {
     </div>
 </body>
 <script type="text/javascript">
+    /** 
+     * Formats results from php query into HTML table
+     **/
     var results = <?php echo json_encode($res_arr) ?>;
     let table = document.getElementById('table');
     var html = "<h1>" + results[0]['name'] + "<h1>" +
@@ -80,6 +93,7 @@ if (isset($pid)) {
         "</thead>" +
         "<tbody>";
     for (res of results) {
+        // Set variables to be used in outputting time
         var dur = res['duration'];
         var min = Math.floor(dur / 60);
         var sec = Math.round(dur % 60);

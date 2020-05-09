@@ -1,4 +1,10 @@
+<!-- 
+Returns songs matching criterea from songs.php song search form
+
+@return { JSON } JSON object with results of the query. -->
+
 <?php
+// Initialize MySQL connection
 define('DB_HOST', 'mysql.eecs.ku.edu');
 define('DB_NAME', 'jschreiner');
 define('DB_CHARSET', 'utf8');
@@ -20,6 +26,7 @@ try {
   die($ex->getMessage());
 }
 
+// Use if statements to find correct case of comparisons for tempo and duration.  Once found, create and execute query.
 if ($_POST['tempoComparison'] == 'less') {
   if ($_POST['lengthComparison'] == 'less') {
     $stmt = $pdo->prepare("SELECT title, s_id FROM SONGS WHERE title LIKE ? AND tempo < ? AND duration < ?");
@@ -55,6 +62,7 @@ if ($_POST['tempoComparison'] == 'less') {
   }
 }
 
+// Create and return JSON object with query results
 $results = $stmt->fetchAll();
 if (isset($_POST['ajax'])) {
   echo json_encode($results);

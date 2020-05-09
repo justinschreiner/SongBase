@@ -14,6 +14,12 @@
     <link rel="stylesheet" href="./css/style.css" />
     <link rel="stylesheet" href="./css/songs.css" />
     <script>
+        /**
+         * Pulls user input values from song search box and passes to AJAX to perform
+         * MySQL query.  Appends results of query to results box using HTML.
+         *
+         * @return {Boolean} Returns False.
+         */
         function fetch() {
             // find inputs from form
             var data = new FormData();
@@ -91,13 +97,21 @@
             return false;
         }
 
+        /**
+         * Passes sid of a song to AJAX query and formats data returned by that
+         * query using HTML table.
+         *
+         * @param {string}  sid  Song ID of the song the user clicked
+         *
+         * @return {Boolean}  Returns False
+         */
         function getSongInfo(sid) {
-            // find inputs from form
+            // find sid from song that was clicked
             var data = new FormData();
             data.append('search', sid);
             data.append('ajax', 1);
 
-            // use AJAX to search and return songs
+            // use AJAX to search and return song data
             var xhr = new XMLHttpRequest();
             xhr.open('POST', "song_info.php", true);
             xhr.onload = function() {
@@ -105,9 +119,9 @@
                     var results = JSON.parse(this.response),
                         wrapper = document.getElementById("song-modal");
                     wrapper.innerHTML = "";
-                    console.log(results, results.length);
                     if (results.length > 0) {
                         for (var res of results) {
+                            // assign variables to use for displaying time later to format time properly
                             var dur = res['duration'];
                             var min = Math.floor(dur / 60);
                             var sec = Math.round(dur % 60);
@@ -143,7 +157,7 @@
                                 "</tr>" +
                                 "</tbody>" +
                                 "</table>" +
-                                "<div class = 'add-button' id=" + res['s_id'] + " onclick='fetchUserPlaylists(this.id)'>" +
+                                "<div class = 'add-button' id=" + res['s_id'] + " onclick='fetchUserPlaylists(this.id)'>" + //button's id is this song's id, stored so it can be passed to future functions for adding to playlist
                                 "<button data-dismiss='modal' data-toggle='modal' data-target='#addModal' class='btn btn-primary'>Add to Playlist</button>" +
                                 "</div>";
                             wrapper.appendChild(line);
@@ -159,8 +173,15 @@
             return false;
         }
 
+        /**
+         * Gets all playlists owned by the current session's user.
+         *
+         * @param {string}  sid  Song ID of the song the user wants to add to playlist
+         *
+         * @return {Boolean} Returns False.
+         */
         function fetchUserPlaylists(sid) {
-            // find inputs from form
+            // find uid from session
             var data = new FormData();
             var uid = <?php session_start();
                         echo $_SESSION['uid']; ?>;
@@ -176,8 +197,8 @@
                     var results = JSON.parse(this.response),
                         wrapper = document.getElementById("userPlaylists");
                     wrapper.innerHTML = "";
-                    if (results.length > 0) {
-                        for (var res of results) {
+                    if (results.length > 0) { // If the user has created one or more playlists
+                        for (var res of results) { // Creates checklist of playlists for user to add songs to
                             var line = document.createElement("div");
                             line.className = "playlist-result";
                             line.innerHTML =
@@ -189,13 +210,15 @@
                                 "</div>";
                             wrapper.appendChild(line);
                         }
+                        // Button for user to submit checklist selections
                         var bt = document.createElement("div")
                         bt.innerHTML = "<button id='add-btn' type='submit' class='btn btn-primary'>Add Song</button>"
                         wrapper.appendChild(bt);
+                        // Hidden input value to allow song's sid to be passed to addToPlaylist() when form submits
                         var sidVal = document.createElement("div");
                         sidVal.innerHTML = "<input type='hidden' name='sid' value=" + sid + ">";
                         wrapper.appendChild(sidVal);
-                    } else {
+                    } else { // Displays this message if the user has not created any playlists yet
                         wrapper.innerHTML = "<h3>You have not created any playlists yet.<h3> <a href='new-playlist.php'>" +
                             "<button type='button' class='btn btn-primary'>Create Playlist<button></a>";
                     }
@@ -205,10 +228,6 @@
             };
             xhr.send(data);
             return false;
-        }
-
-        function justin() {
-            console.log("justin");
         }
     </script>
 </head>
